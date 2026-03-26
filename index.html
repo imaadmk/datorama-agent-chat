@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Datorama AI Assistant</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(135deg, #1e3a5f 0%, #6366f1 100%);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chat-header {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            padding: 24px;
+            color: white;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .chat-header h2 {
+            margin: 0 0 8px 0;
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .chat-header p {
+            margin: 0;
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            margin-top: 12px;
+            padding: 6px 12px;
+            background: rgba(16, 185, 129, 0.2);
+            border-radius: 20px;
+        }
+
+        .status-badge::before {
+            content: "";
+            width: 8px;
+            height: 8px;
+            background: #10b981;
+            border-radius: 50%;
+            display: inline-block;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 0.5;
+                transform: scale(1.1);
+            }
+        }
+
+        .chat-container {
+            flex: 1;
+            position: relative;
+            background: white;
+            border-radius: 16px 16px 0 0;
+            box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+            margin: 0;
+        }
+
+        .loading-indicator {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 60px 20px;
+            color: #6b7280;
+        }
+
+        .loading-indicator::after {
+            content: "Loading chat...";
+            margin-left: 10px;
+        }
+
+        /* Embedded messaging container will appear here */
+        #chat-widget-container {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-header">
+        <h2>Insights Powered by Agentforce</h2>
+        <p>Ask me anything about your marketing performance</p>
+        <div class="status-badge">
+            Online - Ready to help
+        </div>
+    </div>
+
+    <div class="chat-container">
+        <div id="chat-widget-container">
+            <div class="loading-indicator"></div>
+        </div>
+    </div>
+
+    <!-- Salesforce Embedded Messaging -->
+    <script type='text/javascript'>
+        function initEmbeddedMessaging() {
+            try {
+                embeddedservice_bootstrap.settings.language = 'en_US';
+
+                embeddedservice_bootstrap.init(
+                    '00DWs00000Kxsld',
+                    'Datorama_Web_Chat',
+                    'https://storm-ba3e1e6618d0c6.my.site.com/ESWDatoramaWebChat1774479171702',
+                    {
+                        scrt2URL: 'https://storm-ba3e1e6618d0c6.my.salesforce-scrt.com'
+                    }
+                );
+
+                // Hide loading indicator once chat loads
+                setTimeout(() => {
+                    const loader = document.querySelector('.loading-indicator');
+                    if (loader) loader.style.display = 'none';
+                }, 2000);
+
+            } catch (err) {
+                console.error('Error loading Embedded Messaging: ', err);
+                document.querySelector('.loading-indicator').innerHTML =
+                    '⚠️ Failed to load chat. Please refresh the page.';
+            }
+        }
+    </script>
+    <script type='text/javascript'
+            src='https://storm-ba3e1e6618d0c6.my.site.com/ESWDatoramaWebChat1774479171702/assets/js/bootstrap.min.js'
+            onload='initEmbeddedMessaging()'>
+    </script>
+</body>
+</html>
